@@ -1,4 +1,4 @@
-use crate::keyboard;
+use crate::{debug, keyboard};
 use std::process;
 
 use sdl2::{event::Event, keyboard::Scancode, sys::random, EventPump};
@@ -100,22 +100,22 @@ impl Chip8 {
             let nnn = instr & 0x0FFF;
 
             if self.debug_mode {
-                // debug::debug(
-                //     self.pc,
-                //     instr,
-                //     code,
-                //     x,
-                //     y,
-                //     n,
-                //     nn,
-                //     nnn,
-                //     self.registers,
-                //     self.index,
-                // );
+                debug::debug(
+                    self.pc,
+                    instr,
+                    code,
+                    x,
+                    y,
+                    n,
+                    nn,
+                    nnn,
+                    self.registers,
+                    self.index,
+                );
             }
 
             self.interpret(event_pump, code, x, y, n, nn, nnn);
-            self.last_instruction_t = t;
+            self.last_instruction_t = t;            
         }
     }
 

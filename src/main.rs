@@ -163,7 +163,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Start time
     let start: u128 = time::time_nanos();
 
-    println!("R-CHIP-8 starting");
+    println!("chip-8 starting");
 
     // Init SDL2
     let sdl_context = sdl2::init().unwrap();
@@ -217,6 +217,5 @@ fn main() -> Result<(), Box<dyn Error>> {
             beep.pause();
         }
     }
-    println!("Bye!");
     Ok(())
 }
