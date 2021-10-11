@@ -1,8 +1,6 @@
 mod error;
 
 use std::fmt::Display;
-use std::thread;
-use std::time::Duration;
 
 use error::{CPUError, CPUResult};
 
@@ -110,5 +108,26 @@ impl Display for CPU {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let [r1, r2] = self.registers;
         write!(f, "OP: 0x{:x}\nR1: 0x{:x} R2: 0x{:x}", self.opcode, r1, r2)
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn add() -> CPUResult<()> {
+        let mut cpu = CPU::new();
+        cpu.set_opcode(0x8014)?; // add
+        cpu.set_register(0, 0x00)?;
+        cpu.set_register(1, 0x01)?;
+        // cpu.set_opcode(0x8015)?;
+
+        for i in 1..=5 {
+            cpu.execute()?;
+            assert_eq!(cpu.get_register(0)?.as_ref(), &(i as u8));
+        }
+
+        Ok(())
     }
 }
